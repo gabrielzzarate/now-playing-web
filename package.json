@@ -12,6 +12,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "@next-auth/mongodb-adapter": "^1.0.1",
     "apollo-server-express": "^2.19.0",
     "apollo-server-micro": "^2.19.0",
     "axios": "^0.21.0",
@@ -22,9 +23,12 @@
     "graphql-spotify": "^0.44.3",
     "graphql-tools": "^7.0.2",
     "isomorphic-fetch": "^3.0.0",
+    "mongodb": "^4.3.1",
     "next": "^10.0.3",
+    "next-auth": "^4.1.2",
     "react": "^17.0.1",
-    "react-dom": "^17.0.1"
+    "react-dom": "^17.0.1",
+    "swr": "^1.1.2"
   },
   "devDependencies": {
     "@types/node": "^14.14.14",
