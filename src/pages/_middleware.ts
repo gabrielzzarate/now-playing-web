@@ -6,8 +6,8 @@ export async function middleware(req: any) {
   const token = await getToken({ req, secret: process.env.JWT_SECRET ?? '' })
 
   // Allow the requests if the following is true...
-    // 1. if the token exists
-    // 2. Or if it is a token request
+  // 1. if the token exists
+  // 2. Or if it is a token request
 
   const { pathname } = req.nextUrl
 
