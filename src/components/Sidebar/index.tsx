@@ -6,9 +6,9 @@ import {
   SearchIcon,
   LibraryIcon,
   PlusCircleIcon,
-  HeartIcon,
   RssIcon
 } from '@heroicons/react/outline'
+import { HeartIcon } from '@heroicons/react/solid'
 import useSpotify from 'src/hooks/useSpotify'
 
 import { usePlaylistContext } from '@context/playlist'
@@ -27,10 +27,10 @@ function Sidebar() {
     }
   }, [session, spotifyApi])
 
-  const { changePlaylist } = usePlaylistContext()
+  const { changePlaylistState } = usePlaylistContext()
 
   return (
-    <div className='text-gray-500 p-5 text-xs lg:text-sm border-r border-gray-900 overflow-y-scroll scrollbar-hide h-screen sm:max-w-[12rem] lg:max-w-[15rem] hidden md:inline-flex'>
+    <div className='text-gray-500 p-5 text-xs lg:text-sm border-r border-gray-900 overflow-y-scroll scrollbar-hide h-screen sm:max-w-[12rem] lg:max-w-[15rem] hidden md:inline-flex pb-36'>
       <div className='space-y-4'>
         <button className='flex items-center space-x-2 hover:text-white bg-'>
           <HomeIcon className='h-5 w-5' />
@@ -51,7 +51,7 @@ function Sidebar() {
           <p>Create Playlist</p>
         </button>
         <button className='flex items-center space-x-2 hover:text-white'>
-          <HeartIcon className='h-5 w-5' />
+          <HeartIcon className='h-5 w-5 text-blue-500' />
           <p>Liked Songs</p>
         </button>
         <button className='flex items-center space-x-2 hover:text-white'>
@@ -65,7 +65,7 @@ function Sidebar() {
           <p
             key={playlist.id}
             className='cursor-pointer hover:text-white'
-            onClick={() => changePlaylist(playlist.id)}
+            onClick={() => changePlaylistState({ id: playlist.id })}
           >
             {playlist.name}
           </p>

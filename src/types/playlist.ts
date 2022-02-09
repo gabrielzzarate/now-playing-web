@@ -21,6 +21,7 @@ export interface Song {
     duration_ms: number
     album: Album
     artists: [Artist]
+    uri: string
   }
 }
 
