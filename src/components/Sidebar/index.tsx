@@ -16,7 +16,7 @@ import type { Playlist } from '../../types'
 
 function Sidebar() {
   const spotifyApi = useSpotify()
-  const [playlists, setPlaylists] = useState<[Playlist] | []>([])
+  const [playlists, setPlaylists] = useState([])
   const { data: session } = useSession()
 
   useEffect(() => {
@@ -61,7 +61,7 @@ function Sidebar() {
         <hr className='border-t-[0.1px] border-gray-900' />
 
         {/* Playlists from Spotify */}
-        {playlists.map((playlist) => (
+        {playlists?.map((playlist: any) => (
           <p
             key={playlist.id}
             className='cursor-pointer hover:text-white'
