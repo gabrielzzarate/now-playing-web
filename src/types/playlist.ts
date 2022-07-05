@@ -25,7 +25,7 @@ export interface Song {
   }
 }
 
-export interface Playlist {
+export interface SpotifyPlaylist {
   id: string
   name: string
   images: [{ url: string }]
