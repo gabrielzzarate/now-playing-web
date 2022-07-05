@@ -1,10 +1,16 @@
 import { Db, MongoClient, MongoClientOptions } from 'mongodb'
+import mongoose from 'mongoose'
 
 // for reference: https://stackoverflow.com/questions/65779464/cache-mongodb-connection-with-next-js-10-typescript-project-api-route
+// for reference: https://blog.usman-s.me/how-to-use-mongoose-with-nextjs-for-mongodb
 
 const MONGODB_URI = process.env.MONGODB_URI ?? ''
 const MONGO_DB_NAME = process.env.MONGO_DB_NAME ?? ''
 const options = {}
+
+const connectMongo = async () => mongoose.connect(MONGODB_URI)
+
+export { connectMongo }
 
 declare global {
   namespace NodeJS {
