@@ -1,7 +1,9 @@
 import React from 'react'
 import type { Song } from '../../types/playlist'
 
+import Votes from '@components/Votes'
 import useSpotify from '@hooks/useSpotify'
+import { millisToMinutesAndSeconds } from '@utils/time'
 import { usePlaylistContext } from '@context/playlist'
 
 export interface SongProps {
@@ -9,12 +11,10 @@ export interface SongProps {
   order: number
 }
 
-import { millisToMinutesAndSeconds } from '@utils/time'
-
 export default function Song({ order, track }: SongProps) {
   const spotifyApi = useSpotify()
 
-  const { currentTrackId, isPlaying, changePlaylistState } = usePlaylistContext()
+  const { currentTrackId, isPlaying, changePlaylistState, id: playlistId } = usePlaylistContext()
 
   const handlePlaySong = () => {
     changePlaylistState({ currentTrackId: track.track.id, isPlaying: true })
@@ -41,6 +41,7 @@ export default function Song({ order, track }: SongProps) {
       <div className='flex items-center justify-between ml-auto md:ml-0'>
         <p className='hidden md:inline w-40'>{track.track.album.name}</p>
         <p>{millisToMinutesAndSeconds(track.track.duration_ms)}</p>
+        {/* <Votes song={track} playlistId={playlistId} /> */}
       </div>
     </div>
   )

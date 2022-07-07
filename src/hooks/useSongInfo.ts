@@ -22,7 +22,9 @@ export default function useSongInfo() {
           headers: {
             Authorization: `Bearer ${spotifyApi.getAccessToken()}`
           }
-        }).then((res) => res.json())
+        })
+          .then((res) => res.json())
+          .catch((err) => console.log(err))
 
         setSongInfo(trackInfo)
       }

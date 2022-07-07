@@ -5,9 +5,7 @@ import { ChevronDownIcon, UserIcon } from '@heroicons/react/outline'
 
 import { usePlaylistContext } from '@context/playlist'
 import useSpotify from '@hooks/useSpotify'
-
-import type { Playlist } from '../../types'
-
+import type { SpotifyPlaylist } from '../../types'
 import Songs from '@components/Songs'
 
 const colors = [
@@ -23,7 +21,7 @@ const colors = [
 export default function Center() {
   const { data: session } = useSession()
   const [color, setColor] = useState<string | null>(null)
-  const [playlist, setPlaylist] = useState<Playlist | null>(null)
+  const [playlist, setPlaylist] = useState<SpotifyPlaylist | null>(null)
   const spotifyApi = useSpotify()
 
   const { id: playlistId } = usePlaylistContext()
@@ -42,6 +40,8 @@ export default function Center() {
     const color = shuffle(colors).pop() ?? 'from-indigo-500'
     setColor(color)
   }, [])
+
+  console.log('session', session)
 
   return (
     <div className='flex-grow h-screen overflow-y-scroll scrollbar-hide'>
@@ -64,7 +64,7 @@ export default function Center() {
         </div>
       </header>
       <section
-        className={`flex items-end space-x-7 bg-gradient-to-b to-black ${color} h-80 text-white padding-8`}
+        className={`flex items-end space-x-7 bg-gradient-to-b to-black ${color} h-80 text-white padding-8 px-8`}
       >
         <img src={playlist?.images?.[0]?.url} alt='' className='h-44 w-44 shadow-2xl' />
         <div>

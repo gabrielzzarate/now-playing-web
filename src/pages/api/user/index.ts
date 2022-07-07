@@ -3,7 +3,7 @@ import { Db } from 'mongodb'
 import { nanoid } from 'nanoid'
 import { NextApiRequest, NextApiResponse } from 'next'
 import nc from 'next-connect'
-import { User } from '../../types/user'
+import { User } from '../../../types/user'
 
 export default nc<NextApiRequest, NextApiResponse>()
   .get(async (req, res) => {
