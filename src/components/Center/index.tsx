@@ -7,6 +7,7 @@ import { usePlaylistContext } from '@context/playlist'
 import useSpotify from '@hooks/useSpotify'
 import type { SpotifyPlaylist } from '../../types'
 import Songs from '@components/Songs'
+import { User } from '@api/types'
 
 const colors = [
   'from-indigo-500',
@@ -73,7 +74,7 @@ export default function Center() {
         </div>
       </section>
       <div>
-        <Songs playlist={playlist} />
+        <Songs playlist={playlist} user={session?.user as User} />
       </div>
     </div>
   )

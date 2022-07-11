@@ -6,7 +6,8 @@ import { getSession } from 'next-auth/react'
 const AuthenticatedApp = dynamic(() => import('@components/AuthenticatedApp'))
 //const UnauthenticatedApp = dynamic(() => import('@components/UnauthenticatedApp'))
 
-function App() {
+function App(props: any) {
+  console.log('props', props)
   return <AuthenticatedApp />
 }
 

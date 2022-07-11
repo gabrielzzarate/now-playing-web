@@ -1,27 +1,29 @@
 import { ThumbDownIcon, ThumbUpIcon } from '@heroicons/react/solid'
 
-import { votesService } from '@api/votes'
+import { votesService, useVotes } from '@api/votes'
+import { usersService, useUser } from '@api/user'
 import type { Song } from '../../types/playlist'
 import { User } from '../../types/user'
 
 interface VotesProps {
   song: Song
   playlistId: string
-  user: User
+  user?: User
 }
 
 export default function Votes(props: VotesProps) {
+  // todo: fetch votes by playlist id
+  const { data: votes } = useVotes()
+
   const handleUpVote = async () => {
     try {
       const body = {
         song: props.song.track.id,
         playlist: props.playlistId,
         upvote: true,
-        user: props.user.id
+        user: props?.user?.id
       }
       const result = await votesService.create(body)
-
-      console.log('result', result)
 
       return result
     } catch (err) {
