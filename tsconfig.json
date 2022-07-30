@@ -17,6 +17,7 @@
     "paths": {
       "@components/*": ["src/components/*"],
       "@api/*": ["src/api/*"],
+      "@pages/*": ["src/api/*"],
       "@styles/*": ["src/styles/*"],
       "@lib/*": ["src/lib/*"],
       "@context/*": ["src/contexts/*"],

@@ -1,19 +1,20 @@
 import React from 'react'
 import type { Song } from '../../types/playlist'
 
-import Votes from '@components/Votes'
-import useSpotify from '@hooks/useSpotify'
+import Votes from '@components/votes'
+import useSpotify from '@hooks/spotify-api'
 import { millisToMinutesAndSeconds } from '@utils/time'
 import { usePlaylistContext } from '@context/playlist'
-import { User } from '@api/types'
+import { User, Vote } from '@api/types'
 
 export interface SongProps {
   track: Song
   order: number
   user?: User
+  votes?: Vote[]
 }
 
-export default function Song({ order, track, user }: SongProps) {
+export default function Song({ order, track, user, votes }: SongProps) {
   const spotifyApi = useSpotify()
 
   const { currentTrackId, isPlaying, changePlaylistState, id: playlistId } = usePlaylistContext()
@@ -43,7 +44,7 @@ export default function Song({ order, track, user }: SongProps) {
       <div className='flex items-center justify-between ml-auto md:ml-0'>
         <p className='hidden md:inline w-40'>{track.track.album.name}</p>
         <p>{millisToMinutesAndSeconds(track.track.duration_ms)}</p>
-        <Votes song={track} playlistId={playlistId} user={user} />
+        <Votes song={track} playlistId={playlistId} user={user} votes={votes} />
       </div>
     </div>
   )

@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useCallback } from 'react'
 
 import { useSession } from 'next-auth/react'
-import useSpotify from '@hooks/useSpotify'
-import useSongInfo from '@hooks/useSongInfo'
+import useSpotify from '@hooks/spotify-api'
+import useSongInfo from '@hooks/song-info'
 import { usePlaylistContext } from '@context/playlist'
 import { HeartIcon, VolumeUpIcon as VolumeDownIcon } from '@heroicons/react/outline'
 import {

@@ -4,9 +4,9 @@ import { shuffle } from 'lodash'
 import { ChevronDownIcon, UserIcon } from '@heroicons/react/outline'
 
 import { usePlaylistContext } from '@context/playlist'
-import useSpotify from '@hooks/useSpotify'
+import useSpotify from '@hooks/spotify-api'
 import type { SpotifyPlaylist } from '../../types'
-import Songs from '@components/Songs'
+import Songs from '@components/songs'
 import { User } from '@api/types'
 
 const colors = [

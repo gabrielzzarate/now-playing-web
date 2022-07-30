@@ -1,8 +1,8 @@
 import * as React from 'react'
 
-import Sidebar from '@components/Sidebar'
-import Center from '@components/Center'
-import Player from '@components/Player'
+import Sidebar from '@components/sidebar'
+import Center from '@components/center'
+import Player from '@components/player'
 
 const AuthenticatedApp = () => {
   return (

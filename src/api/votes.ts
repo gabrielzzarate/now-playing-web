@@ -1,16 +1,8 @@
 import { Service, useList, useRead, SWRConfiguration, useGet } from '@api/common'
-import { Base, ListParams } from './types'
-
-export interface Vote extends Base {
-  playlist: string
-  song: string
-  upvote: boolean
-  user: string
-}
-
+import { Base, ListParams, Vote } from './types'
 export class VotesService extends Service<Vote> {
   constructor() {
-    super('/votes')
+    super('votes')
   }
 }
 

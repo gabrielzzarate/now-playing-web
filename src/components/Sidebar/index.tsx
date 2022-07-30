@@ -9,10 +9,9 @@ import {
   RssIcon
 } from '@heroicons/react/outline'
 import { HeartIcon } from '@heroicons/react/solid'
-import useSpotify from 'src/hooks/useSpotify'
+import useSpotify from '@hooks/spotify-api'
 
 import { usePlaylistContext } from '@context/playlist'
-import type { Playlist } from '../../types'
 
 function Sidebar() {
   const spotifyApi = useSpotify()

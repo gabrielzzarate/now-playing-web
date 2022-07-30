@@ -6,6 +6,7 @@ import User from '@api/models/user'
 
 export default nc<NextApiRequest, NextApiResponse>().get(async (req, res) => {
   try {
+    await connectMongo()
     const result = await User.findOne({ _id: req.query.id })
     res.json({ result })
   } catch (err) {

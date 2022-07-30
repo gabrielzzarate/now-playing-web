@@ -3,7 +3,7 @@ import dynamic from 'next/dynamic'
 import { GetServerSideProps } from 'next'
 import { getSession } from 'next-auth/react'
 
-const AuthenticatedApp = dynamic(() => import('@components/AuthenticatedApp'))
+const AuthenticatedApp = dynamic(() => import('@components/authenticated-app'))
 //const UnauthenticatedApp = dynamic(() => import('@components/UnauthenticatedApp'))
 
 function App(props: any) {

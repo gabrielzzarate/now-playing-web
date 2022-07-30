@@ -91,7 +91,7 @@ export class Service<Model extends Base> {
       throw new ApiError(res.status, json.message, json.error)
     }
 
-    return json
+    return json?.result ? json.result : json
   }
 
   // private handleUnauthorizedRequest() {

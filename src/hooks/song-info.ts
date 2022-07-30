@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import useSpotify from '@hooks/useSpotify'
+import useSpotify from '@hooks/spotify-api'
 import { usePlaylistContext } from '@context/playlist'
 
 export interface SongInfo {
