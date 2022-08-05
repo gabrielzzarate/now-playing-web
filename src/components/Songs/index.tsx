@@ -14,7 +14,7 @@ export default function Songs({
   user?: User
 }) {
   const { reorder } = useReorderPlaylist(playlist?.id ?? '')
-  const { data: votes } = useVotes()
+  const { data: votes } = useVotes({ playlist: playlist?.id })
 
   return (
     <div className='px-8 flex flex-col space-y-1 pb-28 text-white'>

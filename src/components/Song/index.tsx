@@ -34,7 +34,7 @@ export default function Song({ order, track, user, votes }: SongProps) {
     >
       <div className='flex items-center space-x-4'>
         <p>{order + 1}</p>
-        <img src={track.track.album.images[0].url} alt={track.track.name} className='h-10 w-10' />
+        <img src={track.track.album.images[0]?.url} alt={track.track.name} className='h-10 w-10' />
         <div>
           <p className='w-36 lg:w-64 text-white truncate'>{track.track.name}</p>
           <p className='w-40 '>{track.track.artists[0].name}</p>

@@ -7,7 +7,9 @@ export default nc<NextApiRequest, NextApiResponse>()
   .get(async (req, res) => {
     try {
       await connectMongo()
-      const result = await Votes.find({})
+      const playlist = req.query.playlist
+
+      const result = await Votes.find({ playlist })
 
       res.json({ result })
     } catch (err) {
