@@ -1,21 +1,40 @@
 import React from 'react'
-import Image from 'next/image'
 import { GetServerSideProps } from 'next'
 import { getProviders, signIn } from 'next-auth/react'
 
-export default function Login({ providers }: any) {
+interface LoginProps {
+  providers: Record<string, { id: string; name: string }> | null
+  isSpotifyConfigured: boolean
+}
+
+export default function Login({ providers, isSpotifyConfigured }: LoginProps) {
+  if (!isSpotifyConfigured || !providers || Object.keys(providers).length === 0) {
+    return (
+      <div className='flex flex-col items-center bg-black min-h-screen w-full justify-center text-white'>
+        <div className='flex flex-col items-center bg-[#18D860] text-white mb-8 rounded-full p-5 w-[350px] h-[350px]'>
+          <Logo />
+          <h3 className='text-black text-lg mt-3'>Now Playing</h3>
+        </div>
+        <div className='max-w-md text-center p-6 bg-gray-900 rounded-lg'>
+          <h2 className='text-xl font-bold mb-4'>Setup Required</h2>
+          <p className='text-gray-300 mb-4'>
+            Spotify credentials are not configured. See <code className='bg-gray-800 px-1 rounded'>.env.example</code> for setup instructions.
+          </p>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className='flex flex-col items-center bg-black min-h-screen w-full justify-center'>
-      
-      {Object.values(providers).map((provider: any, i) => (
+      {Object.values(providers).map((provider, i) => (
         <div key={i}>
           <div className='flex flex-col items-center bg-[#18D860] text-white mb-8 rounded-full p-5 w-[350px] h-[350px]'>
             <Logo />
             <h3 className='text-black text-lg mt-3'>Now Playing</h3>
           </div>
-          <button onClick={() => signIn(provider.id, { callbackUrl: '/'})} className='bg-[#18D860] text-black p-5 rounded-full mx-auto block'>Login with {provider.name}</button>
+          <button onClick={() => signIn(provider.id, { callbackUrl: '/'})} className='bg-[#18D860] text-black p-5 rounded-full mx-auto block hover:bg-[#1ed760] transition-colors'>Login with {provider.name}</button>
         </div>
-
       ))}
     </div>
   )
@@ -123,10 +142,12 @@ const Logo = () => (
 
 export const getServerSideProps: GetServerSideProps = async () => {
   const providers = await getProviders()
+  const isSpotifyConfigured = !!(process.env.NEXT_PUBLIC_CLIENT_ID && process.env.NEXT_PUBLIC_CLIENT_SECRET)
 
   return {
     props: {
-      providers
+      providers,
+      isSpotifyConfigured
     }
   }
 }

@@ -1,5 +1,7 @@
 import SpotifyWebApi from 'spotify-web-api-node'
 
+export const isSpotifyConfigured = !!(process.env.NEXT_PUBLIC_CLIENT_ID && process.env.NEXT_PUBLIC_CLIENT_SECRET)
+
 const scopes = [
   'user-read-private',
   'playlist-read-private',

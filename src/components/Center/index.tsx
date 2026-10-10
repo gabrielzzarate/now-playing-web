@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useSession, signOut } from 'next-auth/react'
 import { shuffle } from 'lodash'
-import { ChevronDownIcon, UserIcon } from '@heroicons/react/outline'
+import { ChevronDownIcon, UserIcon } from '@heroicons/react/24/outline'
 
 import { usePlaylistContext } from '@context/playlist'
 import useSpotify from '@hooks/useSpotify'

@@ -33,3 +33,5 @@ export interface SpotifyPlaylist {
     items: [Song]
   }
 }
+
+export type Playlist = SpotifyPlaylist
