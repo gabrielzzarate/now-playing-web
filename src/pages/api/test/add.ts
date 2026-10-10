@@ -1,8 +1,12 @@
 import { NextApiRequest, NextApiResponse } from 'next'
-import { connectMongo } from '@lib/mongo'
+import { connectMongo, isMockMode } from '@lib/mongo'
 import Test from '@api/models/testModel'
 
 export default async function addTest(req: NextApiRequest, res: NextApiResponse) {
+  if (isMockMode) {
+    return res.status(503).json({ error: 'Database not configured' })
+  }
+  
   try {
     console.log('CONNECTING TO MONGO')
     await connectMongo()

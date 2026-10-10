@@ -1,25 +1,30 @@
-import { withMongo } from '@lib/mongo'
+import { withMongo, isMockMode } from '@lib/mongo'
 import { Db } from 'mongodb'
 import { nanoid } from 'nanoid'
 import { NextApiRequest, NextApiResponse } from 'next'
-import nc from 'next-connect'
+import { createRouter } from 'next-connect'
 import { User } from '../../types/user'
 
-export default nc<NextApiRequest, NextApiResponse>()
+const router = createRouter<NextApiRequest, NextApiResponse>()
+
+router
   .get(async (req, res) => {
+    if (isMockMode) {
+      return res.json([])
+    }
+    
     const users = await withMongo(async (db: Db) => {
       const collection = db.collection<User>('users')
-
       return await collection.find().toArray()
     })
 
     return res.json(users)
   })
   .post(async (req, res) => {
-    // if (!isValidEmail(req.body.email)) {
-    //   return res.status(400).json({ error: 'invalid-email' })
-    // }
-
+    if (isMockMode) {
+      return res.status(503).json({ error: 'Database not configured' })
+    }
+    
     await withMongo(async (db: Db) => {
       const collection = db.collection<User>('users')
       await collection.insertOne({
@@ -32,3 +37,5 @@ export default nc<NextApiRequest, NextApiResponse>()
       return res.status(204).end()
     })
   })
+
+export default router.handler()

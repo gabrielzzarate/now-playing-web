@@ -3,12 +3,12 @@ import { useSession } from 'next-auth/react'
 
 import {
   HomeIcon,
-  SearchIcon,
-  LibraryIcon,
+  MagnifyingGlassIcon as SearchIcon,
+  BuildingLibraryIcon as LibraryIcon,
   PlusCircleIcon,
   RssIcon
-} from '@heroicons/react/outline'
-import { HeartIcon } from '@heroicons/react/solid'
+} from '@heroicons/react/24/outline'
+import { HeartIcon } from '@heroicons/react/24/solid'
 import useSpotify from 'src/hooks/useSpotify'
 
 import { usePlaylistContext } from '@context/playlist'

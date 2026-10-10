@@ -18,7 +18,7 @@ export default function useSongInfo() {
   useEffect(() => {
     const fetchSongInfo = async () => {
       if (currentTrackId) {
-        const trackInfo = await fetch(`https://api/spotify/v1/tracks/${currentTrackId}`, {
+        const trackInfo = await fetch(`https://api.spotify.com/v1/tracks/${currentTrackId}`, {
           headers: {
             Authorization: `Bearer ${spotifyApi.getAccessToken()}`
           }

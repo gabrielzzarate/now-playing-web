@@ -1,73 +1,74 @@
 import { Db, MongoClient, MongoClientOptions } from 'mongodb'
 import mongoose from 'mongoose'
 
-// for reference: https://stackoverflow.com/questions/65779464/cache-mongodb-connection-with-next-js-10-typescript-project-api-route
-// for reference: https://blog.usman-s.me/how-to-use-mongoose-with-nextjs-for-mongodb
-
 const MONGODB_URI = process.env.MONGODB_URI ?? ''
-const MONGO_DB_NAME = process.env.MONGO_DB_NAME ?? ''
+const MONGO_DB_NAME = process.env.MONGO_DB_NAME ?? 'now_playing'
 const options = {}
 
-const connectMongo = async () => mongoose.connect(MONGODB_URI)
+const isMockMode = !MONGODB_URI
 
-export { connectMongo }
-
-declare global {
-  namespace NodeJS {
-    interface Global {
-      mongo: {
-        conn?: MongoClient | null
-        promise?: Promise<MongoClient> | null
-      }
-      _mongoClientPromise: Promise<MongoClient> | null
-    }
+const connectMongo = async () => {
+  if (isMockMode) {
+    console.warn('MongoDB URI not configured - running in mock mode')
+    return null
   }
+  return mongoose.connect(MONGODB_URI)
 }
 
-let cached = global.mongo
-let client
+export { connectMongo, isMockMode }
+
+interface MongoGlobal {
+  mongo?: {
+    conn?: MongoClient | null
+    promise?: Promise<MongoClient> | null
+  }
+  _mongoClientPromise?: Promise<MongoClient>
+}
+
+const globalForMongo = globalThis as unknown as MongoGlobal
+
+let cached = globalForMongo.mongo ?? { conn: null, promise: null }
 let clientPromise: Promise<MongoClient>
 
-if (!cached) {
-  cached = global.mongo = { conn: null, promise: null }
+if (!globalForMongo.mongo) {
+  globalForMongo.mongo = cached
 }
 
-if (process.env.NODE_ENV === 'development') {
-  // In development mode, use a global variable so that the value
-  // is preserved across module reloads caused by HMR (Hot Module Replacement).
-  if (!global._mongoClientPromise) {
-    client = new MongoClient(MONGODB_URI, options)
-    global._mongoClientPromise = client.connect()
+if (!isMockMode) {
+  if (process.env.NODE_ENV === 'development') {
+    if (!globalForMongo._mongoClientPromise) {
+      const client = new MongoClient(MONGODB_URI, options)
+      globalForMongo._mongoClientPromise = client.connect()
+    }
+    clientPromise = globalForMongo._mongoClientPromise!
+  } else {
+    const client = new MongoClient(MONGODB_URI, options)
+    clientPromise = client.connect()
   }
-  clientPromise = global._mongoClientPromise
 } else {
-  // In production mode, it's best to not use a global variable.
-  client = new MongoClient(MONGODB_URI, options)
-  clientPromise = client.connect()
+  clientPromise = new Promise((_, reject) => {
+    reject(new Error('MongoDB not configured - running in mock mode'))
+  })
 }
 
 const connectToDatabase = async (): Promise<{ client: MongoClient; db: Db }> => {
+  if (isMockMode) {
+    throw new Error('MongoDB not configured - running in mock mode')
+  }
+  
   if (cached.conn) {
-    // @ts-expect-error
-    return cached.conn
+    return { client: cached.conn, db: cached.conn.db(MONGO_DB_NAME) }
   }
 
   if (!cached.promise) {
     const options: MongoClientOptions = {}
-
-    // @ts-expect-error
-    cached.promise = MongoClient.connect(MONGODB_URI, options).then((client) => {
-      return {
-        client,
-        db: client.db(MONGO_DB_NAME)
-      }
-    })
+    cached.promise = MongoClient.connect(MONGODB_URI, options)
   }
 
-  cached.conn = await cached.promise
+  const client = await cached.promise!
+  cached.conn = client
 
-  // @ts-expect-error
-  return cached.conn
+  return { client, db: client.db(MONGO_DB_NAME) }
 }
 
 export async function withMongo<T>(fn: (db: Db) => Promise<T>): Promise<T> {

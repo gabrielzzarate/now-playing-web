@@ -4,15 +4,15 @@ import { useSession } from 'next-auth/react'
 import useSpotify from '@hooks/useSpotify'
 import useSongInfo from '@hooks/useSongInfo'
 import { usePlaylistContext } from '@context/playlist'
-import { HeartIcon, VolumeUpIcon as VolumeDownIcon } from '@heroicons/react/outline'
+import { HeartIcon, SpeakerWaveIcon as VolumeDownIcon } from '@heroicons/react/24/outline'
 import {
-  RewindIcon,
-  SwitchHorizontalIcon,
-  FastForwardIcon,
+  BackwardIcon as RewindIcon,
+  ArrowsRightLeftIcon as SwitchHorizontalIcon,
+  ForwardIcon as FastForwardIcon,
   PauseIcon,
   PlayIcon,
-  VolumeUpIcon
-} from '@heroicons/react/solid'
+  SpeakerWaveIcon as VolumeUpIcon
+} from '@heroicons/react/24/solid'
 
 import debounce from 'lodash/debounce'
 
